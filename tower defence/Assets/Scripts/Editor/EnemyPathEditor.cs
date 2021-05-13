@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(EnemyPath))]
+[CustomEditor(typeof(EnemyTilesCreator))]
 public class EnemyPathEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        EnemyPath path = (EnemyPath)target;
+        EnemyTilesCreator path = (EnemyTilesCreator)target;
         if (GUILayout.Button("Add next tile"))
         {
             path.AddTile();

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class EnemyPath : MonoBehaviour
+public class EnemyTilesCreator : MonoBehaviour
 {
     public Material currentSelectedTileMat;
     public Material tileMat;
     public GameObject tilePrefab;
     public GameObject path;
+    public static EnemyTilesCreator instance;
     public enum TILE_DIR
     {
         LEFT,
@@ -22,6 +23,17 @@ public class EnemyPath : MonoBehaviour
     public int lastTileIndex = 0;
     public Vector3 startingPoint;
     public List<GameObject> tiles=new List<GameObject>();
+
+    private void Awake()
+    {
+        if(instance==null)
+        {
+            instance = this;
+        } else if(instance!=this)
+        {
+            Destroy(this);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +53,8 @@ public class EnemyPath : MonoBehaviour
             path = new GameObject("Path");
             nextTile = Instantiate(tilePrefab, startingPoint, tilePrefab.transform.rotation, path.transform);
             tiles.Add(nextTile);
-            nextTile.GetComponent<EnemyPathTile>().enemyPath = this;
-            nextTile.GetComponent<EnemyPathTile>().tileIndex = lastTileIndex;
+            nextTile.GetComponent<EnemyTile>().enemyPath = this;
+            nextTile.GetComponent<EnemyTile>().tileIndex = lastTileIndex;
             nextTile.name = "Tile" + lastTileIndex;
             return;
         }
@@ -50,21 +62,21 @@ public class EnemyPath : MonoBehaviour
         {
             nextTile = Instantiate(tilePrefab, startingPoint, tilePrefab.transform.rotation, path.transform);
             tiles.Add(nextTile);
-            nextTile.GetComponent<EnemyPathTile>().enemyPath = this;
-            nextTile.GetComponent<EnemyPathTile>().tileIndex = lastTileIndex;
+            nextTile.GetComponent<EnemyTile>().enemyPath = this;
+            nextTile.GetComponent<EnemyTile>().tileIndex = lastTileIndex;
             nextTile.name = "Tile" + lastTileIndex;
             return;
         }
         
 
-        if (tiles[lastTileIndex].GetComponent<EnemyPathTile>().neighbourTiles[(int)nextTileDirection] != null) return;
+        if (tiles[lastTileIndex].GetComponent<EnemyTile>().neighbourTiles[(int)nextTileDirection] != null) return;
 
         switch (nextTileDirection)
         {
             case TILE_DIR.LEFT:
                 {
                     nextTile = Instantiate(tilePrefab,tiles[lastTileIndex].transform.position + new Vector3(-1f * transform.localScale.x, 0, 0), tilePrefab.transform.rotation, path.transform);
-                    nextTile.GetComponent<EnemyPathTile>().neighbourTiles[(int)EnemyPath.TILE_DIR.RIGHT] = tiles[lastTileIndex];
+                    nextTile.GetComponent<EnemyTile>().neighbourTiles[(int)EnemyTilesCreator.TILE_DIR.RIGHT] = tiles[lastTileIndex];
                     
 
                     break;
@@ -72,28 +84,28 @@ public class EnemyPath : MonoBehaviour
             case TILE_DIR.UP:
                 {
                     nextTile = Instantiate(tilePrefab, tiles[lastTileIndex].transform.position + new Vector3(0, 0, 1f * transform.localScale.z), tilePrefab.transform.rotation, path.transform);
-                    nextTile.GetComponent<EnemyPathTile>().neighbourTiles[(int)EnemyPath.TILE_DIR.DOWN] = tiles[lastTileIndex];
+                    nextTile.GetComponent<EnemyTile>().neighbourTiles[(int)EnemyTilesCreator.TILE_DIR.DOWN] = tiles[lastTileIndex];
                     break;
                 }
             case TILE_DIR.RIGHT:
                 {
                     nextTile = Instantiate(tilePrefab, tiles[lastTileIndex].transform.position + new Vector3(1f * transform.localScale.x, 0, 0), tilePrefab.transform.rotation, path.transform);
-                    nextTile.GetComponent<EnemyPathTile>().neighbourTiles[(int)EnemyPath.TILE_DIR.LEFT] = tiles[lastTileIndex];
+                    nextTile.GetComponent<EnemyTile>().neighbourTiles[(int)EnemyTilesCreator.TILE_DIR.LEFT] = tiles[lastTileIndex];
                     break;
                 }
             case TILE_DIR.DOWN:
                 {
                     nextTile = Instantiate(tilePrefab, tiles[lastTileIndex].transform.position + new Vector3(0, 0, -1f * transform.localScale.z), tilePrefab.transform.rotation, path.transform);
-                    nextTile.GetComponent<EnemyPathTile>().neighbourTiles[(int)EnemyPath.TILE_DIR.UP] = tiles[lastTileIndex];
+                    nextTile.GetComponent<EnemyTile>().neighbourTiles[(int)EnemyTilesCreator.TILE_DIR.UP] = tiles[lastTileIndex];
                     break;
                 }
         }
         //nextTile.GetComponent<EnemyPathTile>().enemyPath = enemyPath;
-        tiles[lastTileIndex].GetComponent<EnemyPathTile>().neighbourTiles[(int)nextTileDirection] = nextTile;
+        tiles[lastTileIndex].GetComponent<EnemyTile>().neighbourTiles[(int)nextTileDirection] = nextTile;
         tiles.Add(nextTile);
         lastTileIndex++;
-        nextTile.GetComponent<EnemyPathTile>().tileIndex = lastTileIndex;
-        nextTile.GetComponent<EnemyPathTile>().enemyPath = this;
+        nextTile.GetComponent<EnemyTile>().tileIndex = lastTileIndex;
+        nextTile.GetComponent<EnemyTile>().enemyPath = this;
         nextTile.name = "Tile" + lastTileIndex;
         //tiles[currentSelectedTile].GetComponent<EnemyPathTile>().AddTile(nextTileDirection);
         //tiles[currentSelectedTile].GetComponent<EnemyPathTile>().AddTile(nextTileDirection);
@@ -111,7 +123,7 @@ public class EnemyPath : MonoBehaviour
         lastTileIndex--;
         for (int i = tileIndex;i<tiles.Count;i++)
         {
-            tiles[i].GetComponent<EnemyPathTile>().tileIndex = i;
+            tiles[i].GetComponent<EnemyTile>().tileIndex = i;
             tiles[i].name= "Tile" + i;
         }
     }

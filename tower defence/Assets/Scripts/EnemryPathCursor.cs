@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class EnemryPathCursor : MonoBehaviour
 {
-    private EnemyPath pathCreator;
+    private EnemyTilesCreator pathCreator;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +22,7 @@ public class EnemryPathCursor : MonoBehaviour
 
     private void OnEnable()
     {
-        pathCreator = FindObjectOfType<EnemyPath>();
+        pathCreator = FindObjectOfType<EnemyTilesCreator>();
     }
 
 

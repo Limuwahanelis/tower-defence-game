@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class EnemyPathTile : MonoBehaviour
+public class EnemyTile : MonoBehaviour
 {
-    public EnemyPath enemyPath;
+    public EnemyTilesCreator enemyPath;
     public GameObject[] neighbourTiles = new GameObject[4];
     public int tileIndex;
     // Start is called before the first frame update
@@ -20,9 +20,9 @@ public class EnemyPathTile : MonoBehaviour
         
     }
 
-    public void AddTile(EnemyPath.TILE_DIR nextTileDirection, EnemyPathTile nextTile)
+    public void AddTile(EnemyTilesCreator.TILE_DIR nextTileDirection, EnemyTile nextTile)
     {
-        nextTile.GetComponent<EnemyPathTile>().enemyPath = enemyPath;
+        nextTile.GetComponent<EnemyTile>().enemyPath = enemyPath;
 
     }
 
