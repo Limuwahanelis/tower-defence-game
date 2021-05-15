@@ -19,7 +19,9 @@ public class SelectTile2 : MonoBehaviour
     {
         for(int i=0;i<_towers.Length;i++)
         {
-            MeshRenderer[] meshes=_towers[i].GetComponentsInChildren<MeshRenderer>();
+            Tower tower = _towers[i].GetComponent<Tower>();
+            
+            MeshRenderer[] meshes=tower.mainBody.GetComponentsInChildren<MeshRenderer>();
             for(int j=0;j<meshes.Length;j++)
             {
                 meshes[j].material = towerTransparentMaterial;

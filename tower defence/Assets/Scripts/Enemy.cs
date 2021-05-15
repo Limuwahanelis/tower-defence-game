@@ -30,5 +30,12 @@ public class Enemy : MonoBehaviour
             _currentTargetTileIndex++;
             if (_currentTargetTileIndex < path.Count) _targetPos = new Vector3(path[_currentTargetTileIndex].transform.position.x, 1f, path[_currentTargetTileIndex].transform.position.z);
         }
+        //Debug.Log(GetEnemyDirection());
     }
+
+    public Vector3 GetEnemyDirection()
+    {
+        return (_targetPos-transform.position).normalized;
+    }
+
 }
