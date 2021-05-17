@@ -52,9 +52,4 @@ public class SelectTile2 : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, 20f * transform.TransformDirection(Vector3.forward));
-    }
-
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class GridTiles : MonoBehaviour
 {
-
-    [SerializeField]
-    GameObject _terrain;
     [SerializeField]
     Vector3 _objectScale;
     [SerializeField]
+    GameObject _terrain;
+    [SerializeField]
     Material _gridMaterial;
+    [SerializeField]
+    GameObject _grid;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +27,9 @@ public class GridTiles : MonoBehaviour
     {
         if(_objectScale!=transform.localScale)
         {
-            transform.localScale=_objectScale;
+            //transform.localScale=_objectScale;
             _terrain.transform.localScale = _objectScale;
+            _grid.transform.localScale = _objectScale;
             _gridMaterial.mainTextureScale = new Vector2(_objectScale.x, _objectScale.z);
         }
     }

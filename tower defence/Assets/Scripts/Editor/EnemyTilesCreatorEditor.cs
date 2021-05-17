@@ -40,9 +40,6 @@ public class EnemyTilesCreatorEditor : Editor
                 EnemyPathCursor cursor = ((EnemyTilesCreator)target).cursor;
                 
                 cursor.transform.position = new Vector3((int)Mathf.Round(hit.point.x), cursor.transform.position.y, (int)Mathf.Round(hit.point.z));
-                //PlaceObject(myPos);
-                //if (Input.GetMouseButton(0))
-                //{
                     int controlID = GUIUtility.GetControlID(FocusType.Passive);
                     switch (Event.current.GetTypeForControl(controlID))
                     {
@@ -55,7 +52,6 @@ public class EnemyTilesCreatorEditor : Editor
                         }
                     case EventType.MouseDrag:
                         {
-                            Debug.Log(hit.collider.name);
                             creator.AddTile(cursor.transform);
                             GUIUtility.hotControl = controlID;
                             Event.current.Use();
@@ -67,17 +63,10 @@ public class EnemyTilesCreatorEditor : Editor
                             Event.current.Use();
                             break;
                     }
-                    //if (hit.rigidbody.GetComponent<EnemyTile>()) return;
-                   
-                    //
-                //}
             }
 
         }
         
-
-
-
     }
     private void OnEnable()
     {

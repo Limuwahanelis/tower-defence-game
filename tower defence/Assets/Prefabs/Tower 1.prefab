@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5785808781208115442}
   - component: {fileID: 4038799804283433404}
   - component: {fileID: 1146671156534737680}
-  - component: {fileID: 3619030958328713297}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -83,20 +82,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3619030958328713297
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780845268090437540}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &5197409454866352798
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +205,8 @@ GameObject:
   - component: {fileID: 6204208584826077923}
   - component: {fileID: 6204208584826077926}
   - component: {fileID: 6204208584826077925}
-  m_Layer: 0
+  - component: {fileID: 7126490127687947820}
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,6 +276,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &7126490127687947820
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6204208584826077922}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &6204208585311904849
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 4867745203663456772}
   - component: {fileID: 5116885478437574014}
   - component: {fileID: 4059652464879199279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,10 +341,9 @@ MonoBehaviour:
   attackRangeIndicator: {fileID: 5337746244740631393}
   mainBody: {fileID: 6232447066442380786}
   turret: {fileID: 0}
-  _col: {fileID: 5116885478437574014}
   missilePrefab: {fileID: 0}
   missileSpawnPos: {fileID: 8823159723736442629}
-  tes: {fileID: 0}
+  _col: {fileID: 5116885478437574014}
 --- !u!135 &5116885478437574014
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -469,7 +468,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2011629738213565914, guid: d42fd78836932584d9142c522e2e6619, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d42fd78836932584d9142c522e2e6619, type: 3}
 --- !u!1 &5337746244740631393 stripped
 GameObject:

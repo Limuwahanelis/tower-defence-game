@@ -8,17 +8,6 @@ public class EnemyTile : MonoBehaviour
     public EnemyTilesCreator enemyPath;
     public GameObject[] neighbourTiles = new GameObject[4];
     public int tileIndex;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void AddTile(EnemyTilesCreator.TILE_DIR nextTileDirection, EnemyTile nextTile)
     {
@@ -29,11 +18,6 @@ public class EnemyTile : MonoBehaviour
     private void OnDestroy()
     {
         enemyPath.RemoveTileFromList(tileIndex);
-
-    }
-
-    void RepositionPath()
-    {
 
     }
 }

@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public float speed;
     public List<GameObject> path;
     private EnemyTilesCreator _pathCreator;
+    public EnemyTile spawnPos;
     private int _currentTargetTileIndex;
     public float epsilon = 0.001f;
     private Vector3 _targetPos;
@@ -16,7 +17,7 @@ public class Enemy : MonoBehaviour
         _pathCreator = EnemyTilesCreator.instance;
         path = _pathCreator.tiles;
         _currentTargetTileIndex = 1;
-        transform.position = new Vector3(path[0].transform.position.x, 1f, path[0].transform.position.z);
+        transform.position = new Vector3(spawnPos.transform.position.x, 1f, spawnPos.transform.position.z);
         _targetPos = new Vector3(path[1].transform.position.x, 1f, path[1].transform.position.z);
     }
 

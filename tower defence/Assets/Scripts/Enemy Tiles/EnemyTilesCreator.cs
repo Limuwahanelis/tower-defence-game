@@ -16,13 +16,10 @@ public class EnemyTilesCreator : MonoBehaviour
     public LayerMask terrainMask;
     public Material currentSelectedTileMat;
     public Material tileMat;
-    private EnemyTile _previousEnemyTile;
     public GameObject tilePrefab;
     public GameObject path;
     public EnemyPathCursor cursor;
     public static EnemyTilesCreator instance;
-
-    public TILE_DIR nextTileDirection;
 
     public int currentSelectedTile=0;
     public int numberOfTiles = 0;
@@ -63,7 +60,6 @@ public class EnemyTilesCreator : MonoBehaviour
         nextTile.GetComponent<EnemyTile>().enemyPath = this;
         nextTile.GetComponent<EnemyTile>().tileIndex = numberOfTiles;
         nextTile.name = "Tile" + numberOfTiles;
-        _previousEnemyTile = nextTile.GetComponent<EnemyTile>();
         SetNeighbourTiles(nextTile);
         numberOfTiles++;
 
@@ -101,10 +97,6 @@ public class EnemyTilesCreator : MonoBehaviour
     {
         tile1.GetComponent<EnemyTile>().neighbourTiles[(int)TILE_DIR.DOWN] = tile2;
         tile2.GetComponent<EnemyTile>().neighbourTiles[(int)TILE_DIR.UP] = tile1;
-    }
-    private void OnValidate()
-    {
-        //if()
     }
 
     public void RemoveTileFromList(int tileIndex)
