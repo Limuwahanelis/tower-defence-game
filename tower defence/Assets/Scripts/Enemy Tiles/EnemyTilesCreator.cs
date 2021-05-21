@@ -52,7 +52,7 @@ public class EnemyTilesCreator : MonoBehaviour
         GameObject nextTile = null;
         if (path == null)
         {
-            path = new GameObject("Path");
+            path = new GameObject("Tiles");
         }
         if (tiles.Find((tile) => tile.transform.position == new Vector3(cursorPos.transform.position.x, cursor.transform.position.y, cursorPos.transform.position.z))) return;
         nextTile = Instantiate(tilePrefab, cursorPos.position, tilePrefab.transform.rotation, path.transform);

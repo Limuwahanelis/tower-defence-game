@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[CreateAssetMenu(menuName = "Enemy/Simple Enemy")]
 public class Enemy : MonoBehaviour
 {
+    public EnemyStats stats;
+
+    [SerializeField]
+    private int _pathIndex;
+    private int _dmg;
+    private int _health;
     public float speed;
-    public List<GameObject> path;
-    private EnemyTilesCreator _pathCreator;
+    private List<EnemyTile> _path;
+    private EnemyPathCreator _pathCreator;
     public EnemyTile spawnPos;
     private int _currentTargetTileIndex;
     public float epsilon = 0.001f;
@@ -14,11 +20,14 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _pathCreator = EnemyTilesCreator.instance;
-        path = _pathCreator.tiles;
+        speed = stats.movementspeed;
+        _dmg = stats.dmgToNexus;
+        _health = stats.maxHealth;
+        _pathCreator = EnemyPathCreator.instance;
+        _path = _pathCreator.enemyPaths[_pathIndex].keyTiles;
         _currentTargetTileIndex = 1;
-        transform.position = new Vector3(spawnPos.transform.position.x, 1f, spawnPos.transform.position.z);
-        _targetPos = new Vector3(path[1].transform.position.x, 1f, path[1].transform.position.z);
+        transform.position = new Vector3(_path[0].transform.position.x, 1f, _path[0].transform.position.z);
+        _targetPos = new Vector3(_path[1].transform.position.x, 1f, _path[1].transform.position.z);
     }
 
     // Update is called once per frame
@@ -29,7 +38,7 @@ public class Enemy : MonoBehaviour
         {
             transform.position = _targetPos;
             _currentTargetTileIndex++;
-            if (_currentTargetTileIndex < path.Count) _targetPos = new Vector3(path[_currentTargetTileIndex].transform.position.x, 1f, path[_currentTargetTileIndex].transform.position.z);
+            if (_currentTargetTileIndex < _path.Count) _targetPos = new Vector3(_path[_currentTargetTileIndex].transform.position.x, 1f, _path[_currentTargetTileIndex].transform.position.z);
         }
         //Debug.Log(GetEnemyDirection());
     }
