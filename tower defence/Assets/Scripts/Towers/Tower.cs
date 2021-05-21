@@ -68,6 +68,7 @@ public class Tower : MonoBehaviour
         _attack = false;
         tmp = Instantiate(missilePrefab, missileSpawnPos.transform.position, missileSpawnPos.transform.rotation);
         tmp.GetComponent<Missile>().speed = stats.missileSpeed;
+        tmp.GetComponent<Missile>().attackDamage = stats.attackDamage;
         yield return new WaitForSeconds(1/stats.attackRate);
         _attack = true;
     }
@@ -126,7 +127,7 @@ public class Tower : MonoBehaviour
             return 0f;
 
         float a = velocitySquared - shotSpeed * shotSpeed;
-        Debug.Log(a);
+        //Debug.Log(a);
         //handle similar velocities
         if (Mathf.Abs(a) < 0.001f)
         {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
     public float speed;
+    public int attackDamage;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +16,14 @@ public class Missile : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * speed);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("dd");
+        if (other.GetComponent<IDamagable>()!=null)
+        {
+            
+            other.GetComponent<IDamagable>().TakeDamage(attackDamage);
+        }
     }
 }

@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: c2d02c282eb81c04eaebff6b23aee95e, type: 2}
+  slider: {fileID: 1264150882085956698}
   _pathIndex: 0
   speed: 1
   epsilon: 0.001

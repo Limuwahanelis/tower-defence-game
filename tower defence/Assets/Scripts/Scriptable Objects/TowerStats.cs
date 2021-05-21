@@ -5,7 +5,7 @@ using UnityEngine;
 public class TowerStats : ScriptableObject
 {
     public float attackRange;
-    public float attackDamage;
+    public int attackDamage;
     public float attackRate;
     public float missileSpeed;
 }

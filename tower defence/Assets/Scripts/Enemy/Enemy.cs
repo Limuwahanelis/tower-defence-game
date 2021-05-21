@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Enemy : MonoBehaviour,IDamagable
 {
     public EnemyStats stats;
-
+    public Slider slider;
     [SerializeField]
     private int _pathIndex;
     private int _dmg;
@@ -19,14 +19,13 @@ public class Enemy : MonoBehaviour,IDamagable
     // Start is called before the first frame update
     void Start()
     {
-        speed = stats.movementspeed;
-        _dmg = stats.dmgToNexus;
-        _health = stats.maxHealth;
+        SetStats();
+        SetSlider();
         _pathCreator = EnemyPathCreator.instance;
         _path = _pathCreator.enemyPaths[_pathIndex].keyTiles;
         _currentTargetTileIndex = 1;
-        transform.position = new Vector3(_path[0].transform.position.x, 1f, _path[0].transform.position.z);
-        _targetPos = new Vector3(_path[1].transform.position.x, 1f, _path[1].transform.position.z);
+        transform.position = new Vector3(_path[0].transform.position.x, 0.55f, _path[0].transform.position.z);
+        _targetPos = new Vector3(_path[1].transform.position.x, 0.55f, _path[1].transform.position.z);
     }
 
     // Update is called once per frame
@@ -37,7 +36,7 @@ public class Enemy : MonoBehaviour,IDamagable
         {
             transform.position = _targetPos;
             _currentTargetTileIndex++;
-            if (_currentTargetTileIndex < _path.Count) _targetPos = new Vector3(_path[_currentTargetTileIndex].transform.position.x, 1f, _path[_currentTargetTileIndex].transform.position.z);
+            if (_currentTargetTileIndex < _path.Count) _targetPos = new Vector3(_path[_currentTargetTileIndex].transform.position.x, 0.55f, _path[_currentTargetTileIndex].transform.position.z);
         }
         //Debug.Log(GetEnemyDirection());
     }
@@ -50,5 +49,21 @@ public class Enemy : MonoBehaviour,IDamagable
     public void TakeDamage(int dmg)
     {
         _health -= dmg;
+        slider.value = _health;
+        Debug.Log("dssd");
+
+    }
+
+    private void SetStats()
+    {
+        speed = stats.movementspeed;
+        _dmg = stats.dmgToNexus;
+        _health = stats.maxHealth;
+    }
+
+    private void SetSlider()
+    {
+        slider.maxValue = stats.maxHealth;
+        slider.value = stats.maxHealth;
     }
 }
