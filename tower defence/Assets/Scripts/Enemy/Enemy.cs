@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(menuName = "Enemy/Simple Enemy")]
-public class Enemy : MonoBehaviour
+
+public class Enemy : MonoBehaviour,IDamagable
 {
     public EnemyStats stats;
 
@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     public float speed;
     private List<EnemyTile> _path;
     private EnemyPathCreator _pathCreator;
-    public EnemyTile spawnPos;
     private int _currentTargetTileIndex;
     public float epsilon = 0.001f;
     private Vector3 _targetPos;
@@ -48,4 +47,8 @@ public class Enemy : MonoBehaviour
         return (_targetPos-transform.position).normalized;
     }
 
+    public void TakeDamage(int dmg)
+    {
+        _health -= dmg;
+    }
 }
