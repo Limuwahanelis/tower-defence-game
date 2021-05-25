@@ -325,6 +325,7 @@ MonoBehaviour:
   _pathIndex: 0
   speed: 1
   epsilon: 0.001
+  tester: {fileID: 1213436761491767191, guid: efa21224fd8eee946b5172dab0819189, type: 3}
 --- !u!54 &4639321321080249981
 Rigidbody:
   m_ObjectHideFlags: 0

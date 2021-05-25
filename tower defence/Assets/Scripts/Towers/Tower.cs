@@ -21,6 +21,8 @@ public class Tower : MonoBehaviour
     private bool onCoolDown = false;
     private bool _attack = true;
     GameObject tmp;
+    public GameObject dd;
+    public GameObject pred;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,10 @@ public class Tower : MonoBehaviour
         
         if (_currentTarget != null)
         {
-            turret.transform.LookAt(CalculateInterceptPoint());
+            pred.transform.position= CalculateInterceptPoint();
+            dd.transform.position = MapTargetPredictedPos(_currentTarget.transform.position ,CalculateInterceptPoint());
+            turret.transform.LookAt(MapTargetPredictedPos(_currentTarget.transform.position, CalculateInterceptPoint()));
+            //Debug.Log((_currentTarget.GetEnemyDirection() * _currentTarget.speed).z);
             if (_attack)
             {
 
@@ -67,6 +72,7 @@ public class Tower : MonoBehaviour
         if (!_attack) yield break;
         _attack = false;
         tmp = Instantiate(missilePrefab, missileSpawnPos.transform.position, missileSpawnPos.transform.rotation);
+        //if()
         tmp.GetComponent<Missile>().speed = stats.missileSpeed;
         tmp.GetComponent<Missile>().attackDamage = stats.attackDamage;
         yield return new WaitForSeconds(1/stats.attackRate);
@@ -76,7 +82,7 @@ public class Tower : MonoBehaviour
     {
         // === variables you need ===
         //how fast our shots move
-        float shotSpeed= stats.missileSpeed;
+        float shotSpeed = stats.missileSpeed;
         //objects
 
         // === derived variables ===
@@ -86,7 +92,7 @@ public class Tower : MonoBehaviour
         //velocities
         Vector3 shooterVelocity = Vector3.zero;
         Vector3 targetVelocity = _currentTarget.speed * _currentTarget.GetEnemyDirection();
-
+        //Debug.Log(targetVelocity);
         //calculate intercept
         return FirstOrderIntercept
         (
@@ -97,7 +103,6 @@ public class Tower : MonoBehaviour
             targetVelocity
         );
     }
-
     Vector3 FirstOrderIntercept(Vector3 shooterPosition, Vector3 shooterVelocity,
             float shotSpeed,
             Vector3 targetPosition,
@@ -146,13 +151,13 @@ public class Tower : MonoBehaviour
         float c = targetRelativePosition.sqrMagnitude;
         float determinant = b * b - 4f * a * c;
 
-        Debug.Log(a + " " + b + " " + c);
-        Debug.Log("det "+determinant);
+        //Debug.Log(a + " " + b + " " + c);
+        //Debug.Log("det "+determinant);
         if (determinant > 0f)
         { //determinant > 0; two intercept paths (most common)
             float t1 = (-b + Mathf.Sqrt(determinant)) / (2f * a),
                     t2 = (-b - Mathf.Sqrt(determinant)) / (2f * a);
-            Debug.Log(t1 + " " + t2);
+            //Debug.Log(t1 + " " + t2);
             if (t1 > 0f)
             {
                 if (t2 > 0f)
@@ -167,6 +172,40 @@ public class Tower : MonoBehaviour
             return 0f;
         else //determinant = 0; one intercept path, pretty much never happens
             return Mathf.Max(-b / (2f * a), 0f); //don't shoot back in time
+    }
+
+    private Vector3 MapTargetPredictedPos(Vector3 currentPos, Vector3 predictedPos)
+    {
+        //Vector3 tmp = new Vector3(currentPos.x, 0, predictedPos.z + (currentPos.x - Mathf.Abs(predictedPos.x))*_currentTarget.transform.forward.z); // nowy predict na osiz wroga
+        //Debug.Log("Pos on z: " + tmp);
+        
+        Vector3 tmpp = _currentTarget.GetEnemyDirection() * _currentTarget.speed;
+        Vector3 distanceFromTurnPoint = _currentTarget.GetDistanceFromTurnPoint();
+        Vector3 distanceFromPredictedPosAndCurrentPos = predictedPos - currentPos;
+        Debug.Log("cur pos: " + currentPos + "predicted pos: " + predictedPos);
+        Debug.Log("dist from turn point on z axis " + distanceFromTurnPoint.z);
+        Debug.Log("dist vec: " + distanceFromPredictedPosAndCurrentPos);
+        Debug.Log("vec length: " + Mathf.Sqrt( Vector3.Dot(distanceFromPredictedPosAndCurrentPos, distanceFromPredictedPosAndCurrentPos)));
+        float distz =Mathf.Sqrt( Vector3.Dot(distanceFromPredictedPosAndCurrentPos, distanceFromPredictedPosAndCurrentPos)) -distanceFromTurnPoint.z;
+        Debug.Log("distz " + distz);
+        Vector3 toReturn = predictedPos;
+        if (distz < 0)
+        {
+            toReturn = new Vector3(currentPos.x, 0.55f, predictedPos.z);
+        }
+        else
+        {
+            Debug.Log(distz * _currentTarget.GetDirectionToNextTurn().x);
+            toReturn = new Vector3(currentPos.x+ distz*_currentTarget.GetDirectionToNextTurn().x, 0.55f,currentPos.z+ (Mathf.Sqrt( Vector3.Dot(distanceFromPredictedPosAndCurrentPos, distanceFromPredictedPosAndCurrentPos)) - distz)*_currentTarget.transform.forward.z);
+        }
+        //float vectorLength=Vector3.Dot(tmp, tmp);
+        //Vector3 toReturn =     
+        //new Vector3(predictedPos.x+(vectorLength - currentPos.z), 0.55f,predictedPos.x-Mathf.Abs(predictedPos.x) );
+        if(Vector3.Angle(distanceFromPredictedPosAndCurrentPos,_currentTarget.transform.forward)==0)
+        {
+            toReturn = predictedPos;
+        }
+        return toReturn;
     }
 
 }

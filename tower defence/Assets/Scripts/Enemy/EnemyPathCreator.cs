@@ -12,7 +12,8 @@ public class EnemyPathCreator : MonoBehaviour
     public static EnemyPathCreator instance;
     public List<EnemyTilesWrapper> enemyPaths = new List<EnemyTilesWrapper>();
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         if (instance == null)
         {

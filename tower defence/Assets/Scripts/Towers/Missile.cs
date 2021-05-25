@@ -6,6 +6,8 @@ public class Missile : MonoBehaviour
 {
     public float speed;
     public int attackDamage;
+    public bool isOnAutoPilot = false;
+    public GameObject target;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +17,10 @@ public class Missile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isOnAutoPilot)
+        {
+            transform.LookAt(target.transform);
+        }
         transform.Translate(Vector3.up * Time.deltaTime * speed);
     }
     private void OnTriggerEnter(Collider other)

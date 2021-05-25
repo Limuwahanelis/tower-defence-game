@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ccea4eaf076274593ad4b9ca13c2db, type: 3}
   m_Name: Tower1
   m_EditorClassIdentifier: 
-  attackRange: 10.28
+  attackRange: 20
   attackDamage: 10
-  attackRate: 1
-  missileSpeed: 2
+  attackRate: 5
+  missileSpeed: 20
